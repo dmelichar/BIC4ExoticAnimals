@@ -3,8 +3,8 @@
 
 @section('content')
     <section class="section">
-        <div class="container">
-            <h1>Edit species</h1>
-        </div>
+        <edit-species>
+
+        </edit-species>
     </section>
 @endsection

@@ -3,8 +3,8 @@
 
 @section('content')
     <section class="section">
-        <div class="container">
-            <h1>List animal</h1>
-        </div>
+        <index-animal>
+
+        </index-animal>
     </section>
 @endsection

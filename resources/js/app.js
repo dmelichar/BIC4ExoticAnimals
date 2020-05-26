@@ -22,6 +22,15 @@ window.Vue = vue;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('query-message', require('./components/base/QueryMessage.vue').default);
+Vue.component('create-animal', require('./components/animal/CreateAnimal.vue').default);
+Vue.component('edit-animal', require('./components/animal/EditAnimal.vue').default);
+Vue.component('index-animal', require('./components/animal/IndexAnimal.vue').default);
+Vue.component('search-animal', require('./components/animal/SearchAnimal.vue').default);
+Vue.component('show-animal', require('./components/animal/ShowAnimal.vue').default);
+Vue.component('create-species', require('./components/species/CreateSpecies.vue').default);
+Vue.component('edit-species', require('./components/species/EditSpecies.vue').default);
+Vue.component('index-species', require('./components/species/IndexSpecies.vue').default);
+Vue.component('show-species', require('./components/species/ShowSpecies.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
