@@ -1,15 +1,12 @@
 <template>
     <div class="container">
-        <div class="columns is-multiline">
+        <div v-for="x in species" :key="x.id" class="columns is-multiline">
             <div class="card column is-half is-offset-one-quarter">
-                <header class="card-header">
-                    <h1 class="card-header-title">
-                        {{ title }}
-                    </h1>
-                </header>
                 <div class="card-content">
-                    <div class="content">
-                        <slot></slot>
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4" v-text="x.name"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -22,6 +19,16 @@
         props: ['title'],
         mounted() {
             console.log('IndexSpecies mounted.')
+        },
+        data() {
+            return {
+                species: []
+            }
+        },
+        created() {
+            axios.get('/list/species').then((response) => {
+                this.species = response.data;
+            });
         }
     }
 </script>

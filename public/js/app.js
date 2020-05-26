@@ -2035,13 +2035,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title'],
   mounted: function mounted() {
     console.log('IndexAnimal mounted.');
+  },
+  data: function data() {
+    return {
+      animals: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get('/list/animal').then(function (response) {
+      _this.animals = response.data;
+    });
   }
 });
 
@@ -2263,13 +2272,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title'],
   mounted: function mounted() {
     console.log('IndexSpecies mounted.');
+  },
+  data: function data() {
+    return {
+      species: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get('/list/species').then(function (response) {
+      _this.species = response.data;
+    });
   }
 });
 
@@ -20037,25 +20055,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "columns is-multiline" }, [
-      _c("div", { staticClass: "card column is-half is-offset-one-quarter" }, [
-        _c("header", { staticClass: "card-header" }, [
-          _c("h1", { staticClass: "card-header-title" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.title) +
-                "\n                "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-content" }, [
-          _c("div", { staticClass: "content" }, [_vm._t("default")], 2)
-        ])
-      ])
-    ])
-  ])
+  return _c(
+    "div",
+    { staticClass: "container" },
+    _vm._l(_vm.animals, function(animal) {
+      return _c(
+        "div",
+        { key: animal.id, staticClass: "columns is-multiline" },
+        [
+          _c(
+            "div",
+            { staticClass: "card column is-half is-offset-one-quarter" },
+            [
+              _c("div", { staticClass: "card-content" }, [
+                _c("div", { staticClass: "media" }, [
+                  _c("div", { staticClass: "media-content" }, [
+                    _c("p", {
+                      staticClass: "title is-4",
+                      domProps: { textContent: _vm._s(animal.name) }
+                    })
+                  ])
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    }),
+    0
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -20284,25 +20312,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "columns is-multiline" }, [
-      _c("div", { staticClass: "card column is-half is-offset-one-quarter" }, [
-        _c("header", { staticClass: "card-header" }, [
-          _c("h1", { staticClass: "card-header-title" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.title) +
-                "\n                "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-content" }, [
-          _c("div", { staticClass: "content" }, [_vm._t("default")], 2)
-        ])
+  return _c(
+    "div",
+    { staticClass: "container" },
+    _vm._l(_vm.species, function(x) {
+      return _c("div", { key: x.id, staticClass: "columns is-multiline" }, [
+        _c(
+          "div",
+          { staticClass: "card column is-half is-offset-one-quarter" },
+          [
+            _c("div", { staticClass: "card-content" }, [
+              _c("div", { staticClass: "media" }, [
+                _c("div", { staticClass: "media-content" }, [
+                  _c("p", {
+                    staticClass: "title is-4",
+                    domProps: { textContent: _vm._s(x.name) }
+                  })
+                ])
+              ])
+            ])
+          ]
+        )
       ])
-    ])
-  ])
+    }),
+    0
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -33610,8 +33644,8 @@ var Form = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/dmelichar/repos/BIC4ExoticAnimals/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/dmelichar/repos/BIC4ExoticAnimals/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Florian\Desktop\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Florian\Desktop\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
