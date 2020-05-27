@@ -8,12 +8,18 @@
                     </h1>
                 </header>
                 <div class="card-content">
-                    <form @submit.prevent="submit">
-                        <input class="input" type="text" v-model="message" placeholder="Enter animal ...">
-                        <button class="button is-primary" type="submit">Create</button>
+                    <form class="vue-form" @submit.prevent="submit">
+                        <div>
+                            <label class="label" for="name">Name</label>
+                            <input type="text" name="name" id="name" required="" v-model="name">
+                        </div>
+                        <div>
+                            <input type="submit" value="Send Form">
+                        </div>
+                        </fieldset>
                     </form>
-                    <div class="content">
-                        <slot></slot>
+                    <div class="debug">
+                        <pre><code>{{ $data }}</code></pre>
                     </div>
                 </div>
             </div>
@@ -22,28 +28,21 @@
 </template>
 
 <script>
-    let form = new Form({
-
-        }
-    )
-
     export default {
-        props: ['title'],
-
-        data() {
+        data: function() {
             return {
-                message: []
-            }
-        },
+                name: "Animal",
 
-        mounted() {
-            console.log('CreateAnimal mounted.')
+            };
         },
-
         methods: {
-            submit() {
-                this.form.put(this.url)
-            }
-        }
+            // submit form handler
+            submit: function() {
+                this.submitted = true;
+
+            },
+
+
+        },
     }
 </script>

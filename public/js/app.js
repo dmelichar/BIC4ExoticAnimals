@@ -1968,20 +1968,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var form = new Form({});
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title'],
   data: function data() {
     return {
-      message: []
+      name: "Animal"
     };
   },
-  mounted: function mounted() {
-    console.log('CreateAnimal mounted.');
-  },
   methods: {
+    // submit form handler
     submit: function submit() {
-      this.form.put(this.url);
+      this.submitted = true;
     }
   }
 });
@@ -20013,6 +20015,7 @@ var render = function() {
           _c(
             "form",
             {
+              staticClass: "vue-form",
               on: {
                 submit: function($event) {
                   $event.preventDefault()
@@ -20021,43 +20024,60 @@ var render = function() {
               }
             },
             [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.message,
-                    expression: "message"
-                  }
-                ],
-                staticClass: "input",
-                attrs: { type: "text", placeholder: "Enter animal ..." },
-                domProps: { value: _vm.message },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", [
+                _c("label", { staticClass: "label", attrs: { for: "name" } }, [
+                  _vm._v("Name")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.name,
+                      expression: "name"
                     }
-                    _vm.message = $event.target.value
+                  ],
+                  attrs: {
+                    type: "text",
+                    name: "name",
+                    id: "name",
+                    required: ""
+                  },
+                  domProps: { value: _vm.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.name = $event.target.value
+                    }
                   }
-                }
-              }),
+                })
+              ]),
               _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "button is-primary", attrs: { type: "submit" } },
-                [_vm._v("Create")]
-              )
+              _vm._m(0)
             ]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "content" }, [_vm._t("default")], 2)
+          _c("div", { staticClass: "debug" }, [
+            _c("pre", [_c("code", [_vm._v(_vm._s(_vm.$data))])])
+          ])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("input", { attrs: { type: "submit", value: "Send Form" } })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -33728,8 +33748,8 @@ var Form = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Florian\Desktop\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Florian\Desktop\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/dmelichar/repos/BIC4ExoticAnimals/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/dmelichar/repos/BIC4ExoticAnimals/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
