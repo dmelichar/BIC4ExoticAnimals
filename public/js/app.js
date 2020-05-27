@@ -1964,10 +1964,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+var form = new Form({});
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title'],
+  data: function data() {
+    return {
+      message: []
+    };
+  },
   mounted: function mounted() {
     console.log('CreateAnimal mounted.');
+  },
+  methods: {
+    submit: function submit() {
+      this.form.put(this.url);
+    }
   }
 });
 
@@ -2019,6 +2034,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2256,6 +2276,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -19985,6 +20010,47 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-content" }, [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.submit($event)
+                }
+              }
+            },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.message,
+                    expression: "message"
+                  }
+                ],
+                staticClass: "input",
+                attrs: { type: "text", placeholder: "Enter animal ..." },
+                domProps: { value: _vm.message },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.message = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "button is-primary", attrs: { type: "submit" } },
+                [_vm._v("Create")]
+              )
+            ]
+          ),
+          _vm._v(" "),
           _c("div", { staticClass: "content" }, [_vm._t("default")], 2)
         ])
       ])
@@ -20067,12 +20133,21 @@ var render = function() {
             "div",
             { staticClass: "card column is-half is-offset-one-quarter" },
             [
-              _c("div", { staticClass: "card-content" }, [
-                _c("div", { staticClass: "media" }, [
-                  _c("div", { staticClass: "media-content" }, [
-                    _c("p", {
-                      staticClass: "title is-4",
+              _c("div", { staticClass: "box" }, [
+                _c("header", { staticClass: "card-header" }, [
+                  _c("strong", [
+                    _c("h1", {
+                      staticClass: "card-header-title",
                       domProps: { textContent: _vm._s(animal.name) }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-content" }, [
+                  _c("small", [
+                    _c("div", {
+                      staticClass: "content",
+                      domProps: { textContent: _vm._s(animal.description) }
                     })
                   ])
                 ])
@@ -20321,12 +20396,21 @@ var render = function() {
           "div",
           { staticClass: "card column is-half is-offset-one-quarter" },
           [
-            _c("div", { staticClass: "card-content" }, [
-              _c("div", { staticClass: "media" }, [
-                _c("div", { staticClass: "media-content" }, [
-                  _c("p", {
-                    staticClass: "title is-4",
+            _c("div", { staticClass: "box" }, [
+              _c("header", { staticClass: "card-header" }, [
+                _c("strong", [
+                  _c("h1", {
+                    staticClass: "card-header-title",
                     domProps: { textContent: _vm._s(x.name) }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "media-content" }, [
+                _c("small", [
+                  _c("div", {
+                    staticClass: "content",
+                    domProps: { textContent: _vm._s(x.description) }
                   })
                 ])
               ])

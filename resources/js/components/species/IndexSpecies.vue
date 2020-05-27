@@ -2,11 +2,16 @@
     <div class="container">
         <div v-for="x in species" :key="x.id" class="columns is-multiline">
             <div class="card column is-half is-offset-one-quarter">
-                <div class="card-content">
-                    <div class="media">
-                        <div class="media-content">
-                            <p class="title is-4" v-text="x.name"/>
-                        </div>
+                <div class="box">
+                    <header class="card-header">
+                        <strong>
+                            <h1 class="card-header-title" v-text="x.name"></h1>
+                        </strong>
+                    </header>
+                    <div class="media-content">
+                        <small>
+                            <div class="content" v-text="x.description"></div>
+                        </small>
                     </div>
                 </div>
             </div>
