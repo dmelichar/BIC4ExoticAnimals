@@ -142,7 +142,7 @@
 
     <footer class="footer">
         <div class="content has-text-centered">
-            <small>Here comes some footer</small>
+            <small>&copy; FH Technikum Florian Dienesch, Marco Judt, Daniel Melichar</small>
         </div>
     </footer>
 </div>

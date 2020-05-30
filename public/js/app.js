@@ -1973,7 +1973,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -33748,8 +33747,8 @@ var Form = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/dmelichar/repos/BIC4ExoticAnimals/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/dmelichar/repos/BIC4ExoticAnimals/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\marco\PhpstormProjects\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\marco\PhpstormProjects\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
