@@ -2,7 +2,7 @@
     <div class="container">
         <header class="card-header">
             <h1 class="card-header-title">
-                {{ title }}
+                Species
             </h1>
         </header>
         <table class="table">
@@ -41,20 +41,19 @@
     export default {
         props: ['title'],
         mounted() {
-            console.log('IndesSpecies mounted.')
+            console.log('IndexSpecies mounted.')
         },
         data() {
             return {
                 species: [],
                 specie: {
                     id: '',
-                    name: '',
                     slug: '',
+                    name: '',
                     description: '',
                     created_at: '',
                     updated_at: ''
                 },
-                species_id: ''
             }
         },
         methods : {

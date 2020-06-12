@@ -2,7 +2,7 @@
     <div class="container">
         <header class="card-header">
             <h1 class="card-header-title">
-                {{ title }}
+                Animals
             </h1>
         </header>
         <table class="table">
@@ -50,15 +50,13 @@
                 animals: [],
                 animal: {
                     id: '',
-                    name: '',
                     slug: '',
-                    species: '',
+                    name: '',
                     description: '',
                     species_id: '',
                     created_at: '',
                     updated_at: ''
                 },
-                animal_id: ''
             }
         },
         methods : {
