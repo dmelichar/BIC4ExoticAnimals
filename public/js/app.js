@@ -2056,6 +2056,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title'],
   mounted: function mounted() {
@@ -2063,14 +2083,36 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      animals: []
+      animals: [],
+      animal: {
+        id: '',
+        name: '',
+        slug: '',
+        species: '',
+        description: '',
+        species_id: '',
+        created_at: '',
+        updated_at: ''
+      },
+      animal_id: ''
     };
+  },
+  methods: {
+    showAnimal: function showAnimal(animal) {
+      window.location.href = '/animal/' + animal.slug;
+    },
+    editAnimal: function editAnimal(animal) {
+      window.location.href = '/animal/' + animal.slug + '/edit';
+    }
   },
   created: function created() {
     var _this = this;
 
     axios.get('/list/animal').then(function (response) {
+      console.log(response);
       _this.animals = response.data;
+    })["catch"](function (error) {
+      console.log(error);
     });
   }
 });
@@ -2298,21 +2340,59 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title'],
   mounted: function mounted() {
-    console.log('IndexSpecies mounted.');
+    console.log('IndesSpecies mounted.');
   },
   data: function data() {
     return {
-      species: []
+      species: [],
+      specie: {
+        id: '',
+        name: '',
+        slug: '',
+        description: '',
+        created_at: '',
+        updated_at: ''
+      },
+      species_id: ''
     };
+  },
+  methods: {
+    showSpecies: function showSpecies(specie) {
+      window.location.href = '/species/' + specie.slug;
+    },
+    editSpecies: function editSpecies(specie) {
+      window.location.href = '/species/' + specie.slug + '/edit';
+    }
   },
   created: function created() {
     var _this = this;
 
     axios.get('/list/species').then(function (response) {
+      console.log(response);
       _this.species = response.data;
+    })["catch"](function (error) {
+      console.log(error);
     });
   }
 });
@@ -20140,46 +20220,96 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    _vm._l(_vm.animals, function(animal) {
-      return _c(
-        "div",
-        { key: animal.id, staticClass: "columns is-multiline" },
-        [
-          _c(
-            "div",
-            { staticClass: "card column is-half is-offset-one-quarter" },
-            [
-              _c("div", { staticClass: "box" }, [
-                _c("header", { staticClass: "card-header" }, [
-                  _c("strong", [
-                    _c("h1", {
-                      staticClass: "card-header-title",
-                      domProps: { textContent: _vm._s(animal.name) }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-content" }, [
-                  _c("small", [
-                    _c("div", {
-                      staticClass: "content",
-                      domProps: { textContent: _vm._s(animal.description) }
-                    })
-                  ])
-                ])
-              ])
-            ]
-          )
-        ]
+  return _c("div", { staticClass: "container" }, [
+    _c("header", { staticClass: "card-header" }, [
+      _c("h1", { staticClass: "card-header-title" }, [
+        _vm._v("\n            " + _vm._s(_vm.title) + "\n        ")
+      ])
+    ]),
+    _vm._v(" "),
+    _c("table", { staticClass: "table" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.animals, function(animal) {
+          return _c("tr", { key: animal.id }, [
+            _c("td", [_vm._v(_vm._s(animal.id))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(animal.slug))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(animal.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(animal.description))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(animal.species_id))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(animal.created_at))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(animal.updated_at))]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "button is-primary",
+                  on: {
+                    click: function($event) {
+                      return _vm.showAnimal(animal)
+                    }
+                  }
+                },
+                [_vm._v("Show")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "button is-primary",
+                  on: {
+                    click: function($event) {
+                      return _vm.editAnimal(animal)
+                    }
+                  }
+                },
+                [_vm._v("Edit")]
+              )
+            ])
+          ])
+        }),
+        0
       )
-    }),
-    0
-  )
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Slug")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Species ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Created at")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Updated at")]),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -20406,42 +20536,92 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    _vm._l(_vm.species, function(x) {
-      return _c("div", { key: x.id, staticClass: "columns is-multiline" }, [
-        _c(
-          "div",
-          { staticClass: "card column is-half is-offset-one-quarter" },
-          [
-            _c("div", { staticClass: "box" }, [
-              _c("header", { staticClass: "card-header" }, [
-                _c("strong", [
-                  _c("h1", {
-                    staticClass: "card-header-title",
-                    domProps: { textContent: _vm._s(x.name) }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "media-content" }, [
-                _c("small", [
-                  _c("div", {
-                    staticClass: "content",
-                    domProps: { textContent: _vm._s(x.description) }
-                  })
-                ])
-              ])
-            ])
-          ]
-        )
+  return _c("div", { staticClass: "container" }, [
+    _c("header", { staticClass: "card-header" }, [
+      _c("h1", { staticClass: "card-header-title" }, [
+        _vm._v("\n            " + _vm._s(_vm.title) + "\n        ")
       ])
-    }),
-    0
-  )
+    ]),
+    _vm._v(" "),
+    _c("table", { staticClass: "table" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.species, function(specie) {
+          return _c("tr", { key: specie.id }, [
+            _c("td", [_vm._v(_vm._s(specie.id))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(specie.slug))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(specie.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(specie.description))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(specie.created_at))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(specie.updated_at))]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "button is-primary",
+                  on: {
+                    click: function($event) {
+                      return _vm.showSpecies(specie)
+                    }
+                  }
+                },
+                [_vm._v("Show")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  staticClass: "button is-primary",
+                  on: {
+                    click: function($event) {
+                      return _vm.editSpecies(specie)
+                    }
+                  }
+                },
+                [_vm._v("Edit")]
+              )
+            ])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Slug")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Created at")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Updated at")]),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

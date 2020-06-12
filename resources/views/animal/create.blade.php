@@ -2,9 +2,7 @@
 
 
 @section('content')
-    <section class="section">
-        <create-animal>
-
-        </create-animal>
+    <section class="section is-fullheight">
+        <create-animal></create-animal>
     </section>
 @endsection

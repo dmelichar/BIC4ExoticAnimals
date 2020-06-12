@@ -7,6 +7,9 @@
                 <h1 class="title">
                     {{ env('APP_TITLE', 'Sample application') }}
                 </h1>
+                <h2 class="subtitle">
+                    On this website you can list, create and search for exotic animals and species
+                </h2>
             </div>
         </div>
     </section>

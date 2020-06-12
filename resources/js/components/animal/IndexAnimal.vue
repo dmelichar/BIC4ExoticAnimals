@@ -1,21 +1,41 @@
 <template>
     <div class="container">
-        <div v-for="animal in animals" :key="animal.id" class="columns is-multiline">
-            <div class="card column is-half is-offset-one-quarter">
-                <div class="box">
-                    <header class="card-header">
-                        <strong>
-                            <h1 class="card-header-title" v-text="animal.name"></h1>
-                        </strong>
-                    </header>
-                    <div class="media-content">
-                        <small>
-                            <div class="content" v-text="animal.description"></div>
-                        </small>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <header class="card-header">
+            <h1 class="card-header-title">
+                {{ title }}
+            </h1>
+        </header>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Slug</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Species ID</th>
+                <th>Created at</th>
+                <th>Updated at</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="animal in animals" :key="animal.id">
+                <td>{{animal.id}}</td>
+                <td>{{animal.slug}}</td>
+                <td>{{animal.name}}</td>
+                <td>{{animal.description}}</td>
+                <td>{{animal.species_id}}</td>
+                <td>{{animal.created_at}}</td>
+                <td>{{animal.updated_at}}</td>
+                <td>
+                    <button class="button is-primary" @click="showAnimal(animal)">Show</button>
+                </td>
+                <td>
+                    <button class="button is-primary" @click="editAnimal(animal)">Edit</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -27,13 +47,36 @@
         },
         data() {
             return {
-                animals: []
+                animals: [],
+                animal: {
+                    id: '',
+                    name: '',
+                    slug: '',
+                    species: '',
+                    description: '',
+                    species_id: '',
+                    created_at: '',
+                    updated_at: ''
+                },
+                animal_id: ''
+            }
+        },
+        methods : {
+            showAnimal(animal){
+                window.location.href = '/animal/' + animal.slug;
+            },
+
+            editAnimal(animal){
+                window.location.href = '/animal/' + animal.slug + '/edit';
             }
         },
         created() {
             axios.get('/list/animal').then((response) => {
+                console.log(response)
                 this.animals = response.data;
+            }).catch(error => {
+                console.log(error)
             });
-        }
+        },
     }
 </script>
