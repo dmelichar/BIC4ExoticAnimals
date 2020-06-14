@@ -101,7 +101,6 @@ class SpeciesController extends Controller
         return $species->delete();
     }
 
-
     /**
      * Display a listing of the resource.
      *

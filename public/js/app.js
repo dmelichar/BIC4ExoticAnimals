@@ -2145,10 +2145,72 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var form = new Form({
+  'animals': []
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title'],
   mounted: function mounted() {
     console.log('SearchAnimal mounted.');
+  },
+  data: function data() {
+    return {
+      form: form,
+      userInput: null
+    };
+  },
+  watch: {
+    userInput: function userInput() {
+      this.search();
+    }
+  },
+  methods: {
+    search: function search() {
+      var _this = this;
+
+      axios.post('/search/animal?q=' + this.userInput).then(function (response) {
+        console.log(response);
+        _this.form.animals = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    showAnimal: function showAnimal(animal) {
+      window.location.href = '/animal/' + animal.slug;
+    },
+    editAnimal: function editAnimal(animal) {
+      window.location.href = '/animal/' + animal.slug + '/edit';
+    }
   }
 });
 
@@ -20521,24 +20583,127 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "columns is-multiline" }, [
       _c("div", { staticClass: "card column is-half is-offset-one-quarter" }, [
-        _c("header", { staticClass: "card-header" }, [
-          _c("h1", { staticClass: "card-header-title" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.title) +
-                "\n                "
-            )
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-content" }, [
+          _c("div", { staticClass: "media-content" }, [
+            _c("label", { staticClass: "label" }, [
+              _vm._v("Type information of the animal:")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "content" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.userInput,
+                    expression: "userInput"
+                  }
+                ],
+                staticClass: "input",
+                attrs: { type: "text", placeholder: "e.g. ankunding-stanton" },
+                domProps: { value: _vm.userInput },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.userInput = $event.target.value
+                  }
+                }
+              })
+            ])
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "card-content" }, [
-          _c("div", { staticClass: "content" }, [_vm._t("default")], 2)
-        ])
+        _vm.form.animals.length > 0 && _vm.userInput
+          ? _c("div", [
+              _c("table", { staticClass: "table" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.form.animals, function(animal) {
+                    return _c("tr", [
+                      _c("td", [_vm._v(_vm._s(animal.id))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(animal.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(animal.description))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(animal.description))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button is-primary",
+                            on: {
+                              click: function($event) {
+                                return _vm.showAnimal(animal)
+                              }
+                            }
+                          },
+                          [_vm._v("Show")]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button is-primary",
+                            on: {
+                              click: function($event) {
+                                return _vm.editAnimal(animal)
+                              }
+                            }
+                          },
+                          [_vm._v("Edit")]
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ])
+          : _vm._e()
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "card-header" }, [
+      _c("h1", { staticClass: "card-header-title" }, [
+        _vm._v("\n                    Search for Animals\n                ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Species ID")]),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
