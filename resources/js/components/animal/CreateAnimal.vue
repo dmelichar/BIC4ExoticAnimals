@@ -11,10 +11,16 @@
                     <form class="vue-form" @submit.prevent="submit">
                         <div>
                             <label class="label" for="name">Name</label>
-                            <input type="text" name="name" id="name" required="" v-model="name">
+                            <input type="text" class="input" name="name" id="name" required="" v-model="form.name">
+
+                            <label class="label" for="description">description</label>
+                            <input type="text" class="input" name="description" id="description" required="" v-model="form.description">
+
+                            <label class="label" for="species_id">Name</label>
+                            <input type="text" class="input" name="species_id" id="species_id" required="" v-model="form.species_id">
                         </div>
                         <div>
-                            <input type="submit" value="Send Form">
+                            <input type="submit" class="button is-primary" value="Send Form">
                         </div>
                     </form>
                     <div class="debug">
@@ -27,20 +33,42 @@
 </template>
 
 <script>
+    let form = new Form({
+        'name': '',
+        'description': '',
+        'species_id': '',
+        'noReset': ['animal_id']
+    });
+
     export default {
+        name: "CreateAnimalComponent",
+        components: {
+            QueryMessage
+        },
+
         data: function() {
             return {
-                name: "Animal",
-
+                form: form,
+                url: ''
             };
         },
         methods: {
             // submit form handler
-            submit: function() {
-                this.submitted = true;
-
+            submit() {
+                this.form
+                    .post(this.url)
+                    .then((response) => {
+                        this.url = '/animal/' + response.slug;
+                        this.form.name = response.name;
+                        this.form.description = response.description;
+                        this.form.species_id = response.species_id;
+                        this.form.noReset = ['name', 'description', 'species_id'];
+                    });
             },
 
+            created() {
+                this.url = '/animal';
+            }
 
         },
     }

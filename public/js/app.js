@@ -1973,16 +1973,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+var form = new Form({
+  'name': '',
+  'description': '',
+  'species_id': '',
+  'noReset': ['animal_id']
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "CreateAnimalComponent",
+  components: {
+    QueryMessage: QueryMessage
+  },
   data: function data() {
     return {
-      name: "Animal"
+      form: form,
+      url: ''
     };
   },
   methods: {
     // submit form handler
     submit: function submit() {
-      this.submitted = true;
+      var _this = this;
+
+      this.form.post(this.url).then(function (response) {
+        _this.url = '/animal/' + response.slug;
+        _this.form.name = response.name;
+        _this.form.description = response.description;
+        _this.form.species_id = response.species_id;
+        _this.form.noReset = ['name', 'description', 'species_id'];
+      });
+    },
+    created: function created() {
+      this.url = '/animal';
     }
   }
 });
@@ -20356,23 +20384,90 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.name,
-                      expression: "name"
+                      value: _vm.form.name,
+                      expression: "form.name"
                     }
                   ],
+                  staticClass: "input",
                   attrs: {
                     type: "text",
                     name: "name",
                     id: "name",
                     required: ""
                   },
-                  domProps: { value: _vm.name },
+                  domProps: { value: _vm.form.name },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.name = $event.target.value
+                      _vm.$set(_vm.form, "name", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  { staticClass: "label", attrs: { for: "description" } },
+                  [_vm._v("description")]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.description,
+                      expression: "form.description"
+                    }
+                  ],
+                  staticClass: "input",
+                  attrs: {
+                    type: "text",
+                    name: "description",
+                    id: "description",
+                    required: ""
+                  },
+                  domProps: { value: _vm.form.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "description", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  { staticClass: "label", attrs: { for: "species_id" } },
+                  [_vm._v("Name")]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.species_id,
+                      expression: "form.species_id"
+                    }
+                  ],
+                  staticClass: "input",
+                  attrs: {
+                    type: "text",
+                    name: "species_id",
+                    id: "species_id",
+                    required: ""
+                  },
+                  domProps: { value: _vm.form.species_id },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "species_id", $event.target.value)
                     }
                   }
                 })
@@ -20396,7 +20491,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [
-      _c("input", { attrs: { type: "submit", value: "Send Form" } })
+      _c("input", {
+        staticClass: "button is-primary",
+        attrs: { type: "submit", value: "Send Form" }
+      })
     ])
   }
 ]
@@ -34520,8 +34618,8 @@ var Form = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\marco\PhpstormProjects\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\marco\PhpstormProjects\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Florian\Desktop\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Florian\Desktop\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
