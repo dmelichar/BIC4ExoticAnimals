@@ -96,7 +96,7 @@
             },
 
             deleteAnimal(){
-                if (confirm("Do you really want to delete this animal?")) {
+                if (confirm("Are you sure you want to delete this animal?\nIt cannot be restored.")) {
                     axios.delete('/animal/' + this.animal.slug).then(response => {
                             console.log(response);
                             window.location.href = '/animal';

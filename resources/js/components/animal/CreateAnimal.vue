@@ -4,7 +4,7 @@
             <div class="card column is-half is-offset-one-quarter">
                 <header class="card-header">
                     <h1 class="card-header-title">
-                        {{ title }}
+                        Create new Animal
                     </h1>
                 </header>
                 <div class="card-content">
@@ -13,19 +13,17 @@
                             <label class="label" for="name">Name</label>
                             <input type="text" class="input" name="name" id="name" required="" v-model="form.name">
 
-                            <label class="label" for="description">description</label>
+                            <label class="label" for="description">Description</label>
                             <input type="text" class="input" name="description" id="description" required="" v-model="form.description">
 
-                            <label class="label" for="species_id">Name</label>
+                            <label class="label" for="species_id">Species ID</label>
                             <input type="text" class="input" name="species_id" id="species_id" required="" v-model="form.species_id">
                         </div>
+                        <br/>
                         <div>
-                            <input type="submit" class="button is-primary" value="Send Form">
+                            <input type="submit" class="button is-primary" value="Create Animal">
                         </div>
                     </form>
-                    <div class="debug">
-                        <pre><code>{{ $data }}</code></pre>
-                    </div>
                 </div>
             </div>
         </div>
@@ -37,39 +35,47 @@
         'name': '',
         'description': '',
         'species_id': '',
-        'noReset': ['animal_id']
     });
 
     export default {
+        props: ['title'],
+        mounted() {
+            console.log('CreateAnimal mounted.')
+        },
+
         name: "CreateAnimalComponent",
         components: {
             QueryMessage
         },
 
-        data: function() {
+        data: function () {
             return {
                 form: form,
-                url: ''
             };
         },
+        //TODO: Assign correct ID and delete from DB if error
         methods: {
             // submit form handler
             submit() {
-                this.form
-                    .post(this.url)
-                    .then((response) => {
-                        this.url = '/animal/' + response.slug;
-                        this.form.name = response.name;
-                        this.form.description = response.description;
-                        this.form.species_id = response.species_id;
-                        this.form.noReset = ['name', 'description', 'species_id'];
-                    });
-            },
+                let name = this.form.name;
+                let description = this.form.description;
+                let species_id = this.form.species_id;
 
-            created() {
-                this.url = '/animal';
+                axios.post('/animal', {
+                    name,
+                    description,
+                    species_id
+                }).then((response) => {
+                    console.log(response);
+                    this.form.name = '';
+                    this.form.description = '';
+                    this.form.species_id = '';
+                    alert("Successfully created animal.")
+                }).catch(error => {
+                    console.log(error),
+                        alert("ERROR:\nAnimal name already exists or species ID not valid.\nPlease try again!")
+                });
             }
-
-        },
+        }
     }
 </script>

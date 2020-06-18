@@ -15,7 +15,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="form.animals.length > 0 && userInput">
+                <div v-if="userInput">
                     <table class="table">
                         <thead>
                         <tr>
@@ -27,7 +27,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="animal in form.animals">
+                        <tr v-for="animal in animals">
                             <td>{{animal.id}}</td>
                             <td>{{animal.name}}</td>
                             <td>{{animal.description}}</td>
@@ -48,9 +48,6 @@
 </template>
 
 <script>
-    let form = new Form({
-        'animals': []
-    });
 
     export default {
         props: ['title'],
@@ -60,7 +57,16 @@
 
         data() {
           return {
-              form: form,
+              animals: [],
+              animal: {
+                  id: '',
+                  slug: '',
+                  name: '',
+                  description: '',
+                  species_id: '',
+                  created_at: '',
+                  updated_at: ''
+              },
               userInput: null
           }
         },
@@ -75,7 +81,7 @@
             search(){
                 axios.post('/search/animal?q='+this.userInput).then(response => {
                     console.log(response);
-                    this.form.animals = response.data
+                    this.animals = response.data
                 }).catch(error => {
                     console.log(error);
                 })

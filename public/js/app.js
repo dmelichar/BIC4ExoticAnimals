@@ -1977,40 +1977,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var form = new Form({
   'name': '',
   'description': '',
-  'species_id': '',
-  'noReset': ['animal_id']
+  'species_id': ''
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['title'],
+  mounted: function mounted() {
+    console.log('CreateAnimal mounted.');
+  },
   name: "CreateAnimalComponent",
   components: {
     QueryMessage: QueryMessage
   },
   data: function data() {
     return {
-      form: form,
-      url: ''
+      form: form
     };
   },
+  //TODO: Assign correct ID and delete from DB if error
   methods: {
     // submit form handler
     submit: function submit() {
       var _this = this;
 
-      this.form.post(this.url).then(function (response) {
-        _this.url = '/animal/' + response.slug;
-        _this.form.name = response.name;
-        _this.form.description = response.description;
-        _this.form.species_id = response.species_id;
-        _this.form.noReset = ['name', 'description', 'species_id'];
+      var name = this.form.name;
+      var description = this.form.description;
+      var species_id = this.form.species_id;
+      axios.post('/animal', {
+        name: name,
+        description: description,
+        species_id: species_id
+      }).then(function (response) {
+        console.log(response);
+        _this.form.name = '';
+        _this.form.description = '';
+        _this.form.species_id = '';
+        alert("Successfully created animal.");
+      })["catch"](function (error) {
+        console.log(error), alert("ERROR:\nAnimal name already exists or species ID not valid.\nPlease try again!");
       });
-    },
-    created: function created() {
-      this.url = '/animal';
     }
   }
 });
@@ -2203,9 +2210,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var form = new Form({
-  'animals': []
-});
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title'],
   mounted: function mounted() {
@@ -2213,7 +2217,16 @@ var form = new Form({
   },
   data: function data() {
     return {
-      form: form,
+      animals: [],
+      animal: {
+        id: '',
+        slug: '',
+        name: '',
+        description: '',
+        species_id: '',
+        created_at: '',
+        updated_at: ''
+      },
       userInput: null
     };
   },
@@ -2228,7 +2241,7 @@ var form = new Form({
 
       axios.post('/search/animal?q=' + this.userInput).then(function (response) {
         console.log(response);
-        _this.form.animals = response.data;
+        _this.animals = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2348,7 +2361,7 @@ __webpack_require__.r(__webpack_exports__);
       window.location.href = '/animal/' + this.animal.slug + '/edit';
     },
     deleteAnimal: function deleteAnimal() {
-      if (confirm("Do you really want to delete this animal?")) {
+      if (confirm("Are you sure you want to delete this animal?\nIt cannot be restored.")) {
         axios["delete"]('/animal/' + this.animal.slug).then(function (response) {
           console.log(response);
           window.location.href = '/animal';
@@ -2449,10 +2462,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var form = new Form({
+  'name': '',
+  'description': ''
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title'],
   mounted: function mounted() {
     console.log('CreateSpecies mounted.');
+  },
+  name: "CreateSpeciesComponent",
+  components: {
+    QueryMessage: QueryMessage
+  },
+  data: function data() {
+    return {
+      form: form
+    };
+  },
+  //TODO: Assign correct ID and delete from DB if error
+  methods: {
+    // submit form handler
+    submit: function submit() {
+      var _this = this;
+
+      var name = this.form.name;
+      var description = this.form.description;
+      axios.post('/species', {
+        name: name,
+        description: description
+      }).then(function (response) {
+        console.log(response);
+        _this.form.name = '';
+        _this.form.description = '';
+        alert("Successfully created species.");
+      })["catch"](function (error) {
+        console.log(error), alert("ERROR:\nSpecies name already exists.\nPlease try again!");
+      });
+    }
   }
 });
 
@@ -20351,15 +20408,7 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "columns is-multiline" }, [
       _c("div", { staticClass: "card column is-half is-offset-one-quarter" }, [
-        _c("header", { staticClass: "card-header" }, [
-          _c("h1", { staticClass: "card-header-title" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.title) +
-                "\n                "
-            )
-          ])
-        ]),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-content" }, [
           _c(
@@ -20409,7 +20458,7 @@ var render = function() {
                 _c(
                   "label",
                   { staticClass: "label", attrs: { for: "description" } },
-                  [_vm._v("description")]
+                  [_vm._v("Description")]
                 ),
                 _vm._v(" "),
                 _c("input", {
@@ -20442,7 +20491,7 @@ var render = function() {
                 _c(
                   "label",
                   { staticClass: "label", attrs: { for: "species_id" } },
-                  [_vm._v("Name")]
+                  [_vm._v("Species ID")]
                 ),
                 _vm._v(" "),
                 _c("input", {
@@ -20473,13 +20522,11 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
-              _vm._m(0)
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(1)
             ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "debug" }, [
-            _c("pre", [_c("code", [_vm._v(_vm._s(_vm.$data))])])
-          ])
+          )
         ])
       ])
     ])
@@ -20490,10 +20537,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "card-header" }, [
+      _c("h1", { staticClass: "card-header-title" }, [
+        _vm._v("\n                    Create new Animal\n                ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", [
       _c("input", {
         staticClass: "button is-primary",
-        attrs: { type: "submit", value: "Send Form" }
+        attrs: { type: "submit", value: "Create Animal" }
       })
     ])
   }
@@ -20715,14 +20772,14 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm.form.animals.length > 0 && _vm.userInput
+        _vm.userInput
           ? _c("div", [
               _c("table", { staticClass: "table" }, [
                 _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "tbody",
-                  _vm._l(_vm.form.animals, function(animal) {
+                  _vm._l(_vm.animals, function(animal) {
                     return _c("tr", [
                       _c("td", [_vm._v(_vm._s(animal.id))]),
                       _vm._v(" "),
@@ -21032,24 +21089,120 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "columns is-multiline" }, [
       _c("div", { staticClass: "card column is-half is-offset-one-quarter" }, [
-        _c("header", { staticClass: "card-header" }, [
-          _c("h1", { staticClass: "card-header-title" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.title) +
-                "\n                "
-            )
-          ])
-        ]),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-content" }, [
-          _c("div", { staticClass: "content" }, [_vm._t("default")], 2)
+          _c(
+            "form",
+            {
+              staticClass: "vue-form",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.submit($event)
+                }
+              }
+            },
+            [
+              _c("div", [
+                _c("label", { staticClass: "label", attrs: { for: "name" } }, [
+                  _vm._v("Name")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.name,
+                      expression: "form.name"
+                    }
+                  ],
+                  staticClass: "input",
+                  attrs: {
+                    type: "text",
+                    name: "name",
+                    id: "name",
+                    required: ""
+                  },
+                  domProps: { value: _vm.form.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "name", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  { staticClass: "label", attrs: { for: "description" } },
+                  [_vm._v("Description")]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.description,
+                      expression: "form.description"
+                    }
+                  ],
+                  staticClass: "input",
+                  attrs: {
+                    type: "text",
+                    name: "description",
+                    id: "description",
+                    required: ""
+                  },
+                  domProps: { value: _vm.form.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "description", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(1)
+            ]
+          )
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "card-header" }, [
+      _c("h1", { staticClass: "card-header-title" }, [
+        _vm._v("\n                    Create new Species\n                ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("input", {
+        staticClass: "button is-primary",
+        attrs: { type: "submit", value: "Create Species" }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -33702,14 +33855,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/components/animal/CreateAnimal.vue ***!
   \*********************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CreateAnimal_vue_vue_type_template_id_489dd7f0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateAnimal.vue?vue&type=template&id=489dd7f0& */ "./resources/js/components/animal/CreateAnimal.vue?vue&type=template&id=489dd7f0&");
 /* harmony import */ var _CreateAnimal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateAnimal.vue?vue&type=script&lang=js& */ "./resources/js/components/animal/CreateAnimal.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _CreateAnimal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _CreateAnimal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -33739,7 +33893,7 @@ component.options.__file = "resources/js/components/animal/CreateAnimal.vue"
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/animal/CreateAnimal.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34618,8 +34772,8 @@ var Form = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Florian\Desktop\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Florian\Desktop\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\marco\PhpstormProjects\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\marco\PhpstormProjects\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
