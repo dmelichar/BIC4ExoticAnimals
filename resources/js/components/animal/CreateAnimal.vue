@@ -19,7 +19,7 @@
                         <div class="field">
                             <label class="label" for="description">Description</label>
                             <div class="control">
-                                <input type="text" class="input" name="description" id="description" required="" v-model="form.description">
+                                <textarea class="textarea" name="description" id="description" required="" v-model="form.description"></textarea>
                             </div>
                         </div>
 
@@ -33,6 +33,9 @@
                                 </select>
                                 </div>
                             </div>
+                            <p class="help is-danger" v-if="form.errors.has('species_id')"
+                               v-text="form.errors.get('species_id')"/>
+                            <p v-if="noSpeciesID" class="help is-warning">Add a species to create animals!</p>
                         </div>
                         <div>
                             <input type="submit" class="button is-primary" value="Create">
@@ -65,14 +68,14 @@
         data: function () {
             return {
                 form: form,
-                species: []
+                species: [],
+                noSpeciesID: false
             };
         },
-        //TODO: Assign correct ID
+        //TODO: Assign correct ID - it is never reset idk why or how
         methods: {
             // submit form handler
             submit() {
-
                 this.form.post('/animal').then((response) => {
                     console.log(response);
                     alert("Successfully created animal")
@@ -90,6 +93,9 @@
             axios.get('/list/species').then((response) => {
                 console.log(response)
                 this.species = response.data;
+
+                if(this.loading)
+                    this.noSpeciesID = true;
             }).catch(error => {
                 console.log(error)
             });

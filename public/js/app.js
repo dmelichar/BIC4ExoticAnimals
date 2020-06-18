@@ -1991,6 +1991,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var form = new Form({
   'name': '',
   'description': '',
@@ -2008,10 +2011,11 @@ var form = new Form({
   data: function data() {
     return {
       form: form,
-      species: []
+      species: [],
+      noSpeciesID: false
     };
   },
-  //TODO: Assign correct ID
+  //TODO: Assign correct ID - it is never reset idk why or how
   methods: {
     // submit form handler
     submit: function submit() {
@@ -2034,6 +2038,7 @@ var form = new Form({
     axios.get('/list/species').then(function (response) {
       console.log(response);
       _this2.species = response.data;
+      if (_this2.loading) _this2.noSpeciesID = true;
     })["catch"](function (error) {
       console.log(error);
     });
@@ -2082,10 +2087,126 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var form = new Form({
+  'name': '',
+  'description': '',
+  'species_id': '',
+  'noReset': ['species_id']
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "CreateAnimalComponent",
+  components: {
+    QueryMessage: QueryMessage
+  },
   props: ['title'],
   mounted: function mounted() {
     console.log('EditAnimal mounted.');
+  },
+  methods: {
+    // submit form handler
+    submit: function submit() {
+      this.form.put('/animal/' + this.animal.slug).then(function (response) {
+        console.log(response);
+        alert("Successfully updated animal");
+      })["catch"](function (error) {
+        console.log(error), alert("ERROR:\nAnimal name already exists");
+      });
+    },
+    deleteAnimal: function deleteAnimal() {
+      if (confirm("Are you sure you want to delete this animal?\nIt cannot be restored")) {
+        axios["delete"]('/animal/' + this.animal.slug).then(function (response) {
+          console.log(response);
+          window.location.href = '/animal';
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    }
+  },
+  data: function data() {
+    return {
+      form: form,
+      species: [],
+      animals: [],
+      animal: {
+        slug: ''
+      },
+      noSpeciesID: false
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    var url = window.location.pathname.split('/');
+    var animal = url[2];
+    axios.get('/list/animal').then(function (response) {
+      for (var i = 0; i < response.data.length; i++) {
+        if (animal == response.data[i].slug) {
+          console.log(response);
+          _this.animal.slug = response.data[i].slug;
+          _this.form.name = response.data[i].name;
+          _this.form.description = response.data[i].description;
+          _this.form.species_id = response.data[i].species_id;
+          _this.form.noReset = ['name', 'description', 'species_id'];
+        }
+      }
+    })["catch"](function (error) {
+      console.log(error);
+    });
+    axios.get('/list/species').then(function (response) {
+      console.log(response);
+      _this.species = response.data;
+      if (_this.loading) _this.noSpeciesID = true;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  },
+  computed: {
+    loading: function loading() {
+      return !this.species.length;
+    }
+  },
+  watch: {
+    species: function species() {
+      if (!this.loading && this.form.species_id === '') {
+        this.form.species_id = _.first(this.species).id;
+      }
+    }
   }
 });
 
@@ -2525,7 +2646,7 @@ var form = new Form({
       form: form
     };
   },
-  //TODO: Assign correct ID
+  //TODO: Assign correct ID - it is never reset idk why or how
   methods: {
     // submit form handler
     submit: function submit() {
@@ -2573,10 +2694,88 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var form = new Form({
+  'name': '',
+  'description': '',
+  'noReset': ['species_id']
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "CreateSpeciesComponent",
+  components: {
+    QueryMessage: QueryMessage
+  },
   props: ['title'],
   mounted: function mounted() {
     console.log('EditSpecies mounted.');
+  },
+  methods: {
+    // submit form handler
+    submit: function submit() {
+      this.form.put('/species/' + this.specie.slug).then(function (response) {
+        console.log(response);
+        alert("Successfully updated species");
+      })["catch"](function (error) {
+        console.log(error), alert("ERROR:\nSpecies name already exists");
+      });
+    },
+    deleteSpecies: function deleteSpecies() {
+      if (confirm("Are you sure you want to delete this species?\nIt cannot be restored")) {
+        axios["delete"]('/species/' + this.specie.slug).then(function (response) {
+          console.log(response);
+          window.location.href = '/species';
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    }
+  },
+  data: function data() {
+    return {
+      form: form,
+      species: [],
+      specie: {
+        slug: ''
+      }
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    var url = window.location.pathname.split('/');
+    var specie = url[2];
+    axios.get('/list/species').then(function (response) {
+      for (var i = 0; i < response.data.length; i++) {
+        if (specie == response.data[i].slug) {
+          console.log(response);
+          _this.specie.slug = response.data[i].slug;
+          _this.form.name = response.data[i].name;
+          _this.form.description = response.data[i].description;
+          _this.form.noReset = ['name', 'description'];
+        }
+      }
+    })["catch"](function (error) {
+      console.log(error);
+    });
   }
 });
 
@@ -20496,7 +20695,7 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "control" }, [
-                  _c("input", {
+                  _c("textarea", {
                     directives: [
                       {
                         name: "model",
@@ -20505,9 +20704,8 @@ var render = function() {
                         expression: "form.description"
                       }
                     ],
-                    staticClass: "input",
+                    staticClass: "textarea",
                     attrs: {
-                      type: "text",
                       name: "description",
                       id: "description",
                       required: ""
@@ -20596,7 +20794,22 @@ var render = function() {
                       )
                     ]
                   )
-                ])
+                ]),
+                _vm._v(" "),
+                _vm.form.errors.has("species_id")
+                  ? _c("p", {
+                      staticClass: "help is-danger",
+                      domProps: {
+                        textContent: _vm._s(_vm.form.errors.get("species_id"))
+                      }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.noSpeciesID
+                  ? _c("p", { staticClass: "help is-warning" }, [
+                      _vm._v("Add a species to create animals!")
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _vm._m(1)
@@ -20654,24 +20867,231 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "columns is-multiline" }, [
       _c("div", { staticClass: "card column is-half is-offset-one-quarter" }, [
-        _c("header", { staticClass: "card-header" }, [
-          _c("h1", { staticClass: "card-header-title" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.title) +
-                "\n                "
-            )
-          ])
-        ]),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-content" }, [
-          _c("div", { staticClass: "content" }, [_vm._t("default")], 2)
+          _c(
+            "form",
+            {
+              staticClass: "vue-form",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.submit($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "field" }, [
+                _c("label", { staticClass: "label", attrs: { for: "name" } }, [
+                  _vm._v("Name")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.name,
+                        expression: "form.name"
+                      }
+                    ],
+                    staticClass: "input",
+                    attrs: {
+                      type: "text",
+                      name: "name",
+                      id: "name",
+                      required: ""
+                    },
+                    domProps: { value: _vm.form.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "name", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c(
+                  "label",
+                  { staticClass: "label", attrs: { for: "description" } },
+                  [_vm._v("Description")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.description,
+                        expression: "form.description"
+                      }
+                    ],
+                    staticClass: "textarea",
+                    attrs: {
+                      name: "description",
+                      id: "description",
+                      required: ""
+                    },
+                    domProps: { value: _vm.form.description },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "description", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c(
+                  "label",
+                  { staticClass: "label", attrs: { for: "species_id" } },
+                  [_vm._v("Species ID")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "select is-fullwidth",
+                      class: _vm.loading ? "is-loading" : ""
+                    },
+                    [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.species_id,
+                              expression: "form.species_id"
+                            }
+                          ],
+                          attrs: { id: "species_id", disabled: _vm.loading },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.form,
+                                "species_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _vm.loading
+                            ? _c(
+                                "option",
+                                { domProps: { value: this.form.species_id } },
+                                [_vm._v("Loading...")]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm._l(_vm.species, function(specie) {
+                            return !_vm.loading
+                              ? _c("option", {
+                                  domProps: {
+                                    value: specie.id,
+                                    textContent: _vm._s(specie.name)
+                                  }
+                                })
+                              : _vm._e()
+                          })
+                        ],
+                        2
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm.form.errors.has("species_id")
+                  ? _c("p", {
+                      staticClass: "help is-danger",
+                      domProps: {
+                        textContent: _vm._s(_vm.form.errors.get("species_id"))
+                      }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.noSpeciesID
+                  ? _c("p", { staticClass: "help is-warning" }, [
+                      _vm._v("Add a species to edit animals!")
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(1)
+            ]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "button",
+              {
+                staticClass: "button is-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteAnimal()
+                  }
+                }
+              },
+              [_vm._v("Delete")]
+            )
+          ])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "card-header" }, [
+      _c("h1", { staticClass: "card-header-title" }, [
+        _vm._v("\n                    Edit animal\n                ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("input", {
+        staticClass: "button is-primary",
+        attrs: { type: "submit", value: "Update" }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -21222,7 +21642,7 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "control" }, [
-                  _c("input", {
+                  _c("textarea", {
                     directives: [
                       {
                         name: "model",
@@ -21231,9 +21651,8 @@ var render = function() {
                         expression: "form.description"
                       }
                     ],
-                    staticClass: "input",
+                    staticClass: "textarea",
                     attrs: {
-                      type: "text",
                       name: "description",
                       id: "description",
                       required: ""
@@ -21306,24 +21725,142 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "columns is-multiline" }, [
       _c("div", { staticClass: "card column is-half is-offset-one-quarter" }, [
-        _c("header", { staticClass: "card-header" }, [
-          _c("h1", { staticClass: "card-header-title" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.title) +
-                "\n                "
-            )
-          ])
-        ]),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-content" }, [
-          _c("div", { staticClass: "content" }, [_vm._t("default")], 2)
+          _c(
+            "form",
+            {
+              staticClass: "vue-form",
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.submit($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "field" }, [
+                _c("label", { staticClass: "label", attrs: { for: "name" } }, [
+                  _vm._v("Name")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.name,
+                        expression: "form.name"
+                      }
+                    ],
+                    staticClass: "input",
+                    attrs: {
+                      type: "text",
+                      name: "name",
+                      id: "name",
+                      required: ""
+                    },
+                    domProps: { value: _vm.form.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "name", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c(
+                  "label",
+                  { staticClass: "label", attrs: { for: "description" } },
+                  [_vm._v("Description")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.description,
+                        expression: "form.description"
+                      }
+                    ],
+                    staticClass: "textarea",
+                    attrs: {
+                      name: "description",
+                      id: "description",
+                      required: ""
+                    },
+                    domProps: { value: _vm.form.description },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "description", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(1)
+            ]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "button",
+              {
+                staticClass: "button is-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteSpecies()
+                  }
+                }
+              },
+              [_vm._v("Delete")]
+            )
+          ])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "card-header" }, [
+      _c("h1", { staticClass: "card-header-title" }, [
+        _vm._v("\n                    Edit species\n                ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("input", {
+        staticClass: "button is-primary",
+        attrs: { type: "submit", value: "Update" }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
 

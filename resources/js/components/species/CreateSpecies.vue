@@ -19,7 +19,7 @@
                         <div class="field">
                             <label class="label" for="description">Description</label>
                             <div class="control">
-                                <input type="text" class="input" name="description" id="description" required="" v-model="form.description">
+                                <textarea class="textarea" name="description" id="description" required="" v-model="form.description"></textarea>
                             </div>
                         </div>
                         <div>
@@ -54,7 +54,7 @@
                 form: form
             };
         },
-        //TODO: Assign correct ID
+        //TODO: Assign correct ID - it is never reset idk why or how
         methods: {
             // submit form handler
             submit() {
