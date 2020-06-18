@@ -86,7 +86,7 @@
             },
 
             deleteSpecies(){
-                if (confirm("Do you really want to delete this species?")) {
+                if (confirm("Are you sure you want to delete this species?\nIt cannot be restored")) {
                     axios.delete('/species/' + this.specie.slug).then(response => {
                         console.log(response);
                         window.location.href = '/species';
@@ -114,3 +114,4 @@
         }
     }
 </script>
+<style scoped></style>

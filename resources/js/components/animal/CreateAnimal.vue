@@ -4,24 +4,38 @@
             <div class="card column is-half is-offset-one-quarter">
                 <header class="card-header">
                     <h1 class="card-header-title">
-                        Create new Animal
+                        Create new animal
                     </h1>
                 </header>
                 <div class="card-content">
                     <form class="vue-form" @submit.prevent="submit">
-                        <div>
+                        <div class="field">
                             <label class="label" for="name">Name</label>
-                            <input type="text" class="input" name="name" id="name" required="" v-model="form.name">
-
-                            <label class="label" for="description">Description</label>
-                            <input type="text" class="input" name="description" id="description" required="" v-model="form.description">
-
-                            <label class="label" for="species_id">Species ID</label>
-                            <input type="text" class="input" name="species_id" id="species_id" required="" v-model="form.species_id">
+                            <div class="control">
+                                <input type="text" class="input" name="name" id="name" required="" v-model="form.name">
+                            </div>
                         </div>
-                        <br/>
+
+                        <div class="field">
+                            <label class="label" for="description">Description</label>
+                            <div class="control">
+                                <input type="text" class="input" name="description" id="description" required="" v-model="form.description">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label" for="species_id">Species ID</label>
+                            <div class="control">
+                                <div class="select is-fullwidth" :class="loading ? 'is-loading' : ''">
+                                <select id="species_id" :disabled="loading" v-model="form.species_id">
+                                    <option v-if="loading" :value="this.form.species_id">Loading...</option>
+                                    <option v-for="specie in species" v-if="!loading" v-text="specie.name" :value="specie.id"></option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
                         <div>
-                            <input type="submit" class="button is-primary" value="Create Animal">
+                            <input type="submit" class="button is-primary" value="Create">
                         </div>
                     </form>
                 </div>
@@ -38,44 +52,62 @@
     });
 
     export default {
-        props: ['title'],
-        mounted() {
-            console.log('CreateAnimal mounted.')
-        },
-
         name: "CreateAnimalComponent",
         components: {
             QueryMessage
         },
 
+        props: ['title'],
+        mounted() {
+            console.log('CreateAnimal mounted.')
+        },
+
         data: function () {
             return {
                 form: form,
+                species: []
             };
         },
-        //TODO: Assign correct ID and delete from DB if error
+        //TODO: Assign correct ID
         methods: {
             // submit form handler
             submit() {
-                let name = this.form.name;
-                let description = this.form.description;
-                let species_id = this.form.species_id;
 
-                axios.post('/animal', {
-                    name,
-                    description,
-                    species_id
-                }).then((response) => {
+                this.form.post('/animal').then((response) => {
                     console.log(response);
+                    alert("Successfully created animal")
                     this.form.name = '';
                     this.form.description = '';
                     this.form.species_id = '';
-                    alert("Successfully created animal.")
                 }).catch(error => {
                     console.log(error),
-                        alert("ERROR:\nAnimal name already exists or species ID not valid.\nPlease try again!")
+                    alert("ERROR:\nAnimal name already exists")
                 });
+            }
+        },
+
+        created() {
+            axios.get('/list/species').then((response) => {
+                console.log(response)
+                this.species = response.data;
+            }).catch(error => {
+                console.log(error)
+            });
+        },
+
+        computed: {
+            loading() {
+                return !this.species.length
+            }
+        },
+
+        watch: {
+            species() {
+                if (!this.loading && this.form.species_id === '') {
+                    this.form.species_id = _.first(this.species).id;
+                }
             }
         }
     }
 </script>
+<style scoped></style>

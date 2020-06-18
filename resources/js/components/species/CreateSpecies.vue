@@ -4,21 +4,26 @@
             <div class="card column is-half is-offset-one-quarter">
                 <header class="card-header">
                     <h1 class="card-header-title">
-                        Create new Species
+                        Create new species
                     </h1>
                 </header>
                 <div class="card-content">
                     <form class="vue-form" @submit.prevent="submit">
-                        <div>
+                        <div class="field">
                             <label class="label" for="name">Name</label>
-                            <input type="text" class="input" name="name" id="name" required="" v-model="form.name">
-
-                            <label class="label" for="description">Description</label>
-                            <input type="text" class="input" name="description" id="description" required="" v-model="form.description">
+                            <div class="control">
+                                <input type="text" class="input" name="name" id="name" required="" v-model="form.name">
+                            </div>
                         </div>
-                        <br/>
+
+                        <div class="field">
+                            <label class="label" for="description">Description</label>
+                            <div class="control">
+                                <input type="text" class="input" name="description" id="description" required="" v-model="form.description">
+                            </div>
+                        </div>
                         <div>
-                            <input type="submit" class="button is-primary" value="Create Species">
+                            <input type="submit" class="button is-primary" value="Create">
                         </div>
                     </form>
                 </div>
@@ -34,41 +39,36 @@
     });
 
     export default {
-        props: ['title'],
-        mounted() {
-            console.log('CreateSpecies mounted.')
-        },
-
         name: "CreateSpeciesComponent",
         components: {
             QueryMessage
         },
 
+        props: ['title'],
+        mounted() {
+            console.log('CreateSpecies mounted.')
+        },
+
         data: function () {
             return {
-                form: form,
+                form: form
             };
         },
-        //TODO: Assign correct ID and delete from DB if error
+        //TODO: Assign correct ID
         methods: {
             // submit form handler
             submit() {
-                let name = this.form.name;
-                let description = this.form.description;
-
-                axios.post('/species', {
-                    name,
-                    description,
-                }).then((response) => {
+                this.form.post('/species').then((response) => {
                     console.log(response);
-                    this.form.name = '';
+                    alert("Successfully created species")
+                    this.form.name = ''
                     this.form.description = '';
-                    alert("Successfully created species.")
                 }).catch(error => {
                     console.log(error),
-                        alert("ERROR:\nSpecies name already exists.\nPlease try again!")
+                    alert("ERROR:\nSpecies name already exists")
                 });
             }
         }
     }
 </script>
+<style scoped></style>
