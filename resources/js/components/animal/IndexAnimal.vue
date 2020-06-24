@@ -8,25 +8,19 @@
         <table class="table">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Slug</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Species ID</th>
-                <th>Created at</th>
-                <th>Updated at</th>
+                <th>Created</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="animal in animals" :key="animal.id">
-                <td>{{animal.id}}</td>
-                <td>{{animal.slug}}</td>
                 <td>{{animal.name}}</td>
                 <td>{{animal.description}}</td>
                 <td>{{animal.species_id}}</td>
-                <td>{{animal.created_at}}</td>
-                <td>{{animal.updated_at}}</td>
+                <td>{{moment(animal.created_at).fromNow()}}</td>
                 <td>
                     <button class="button is-primary" @click="showAnimal(animal)">Show</button>
                 </td>
@@ -40,6 +34,8 @@
 </template>
 
 <script>
+    import moment from 'moment'
+
     export default {
         props: ['title'],
         mounted() {
@@ -60,17 +56,16 @@
             }
         },
         methods : {
+            moment,
             showAnimal(animal){
                 window.location.href = '/animal/' + animal.slug;
             },
-
             editAnimal(animal){
                 window.location.href = '/animal/' + animal.slug + '/edit';
-            }
+            },
         },
         created() {
             axios.get('/list/animal').then((response) => {
-                console.log(response)
                 this.animals = response.data;
             }).catch(error => {
                 console.log(error)

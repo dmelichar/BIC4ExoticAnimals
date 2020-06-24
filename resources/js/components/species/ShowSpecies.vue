@@ -32,7 +32,7 @@
                             <br/>
                             <div class="media-content">
                                 <strong>
-                                    <div>Created at</div>
+                                    <div>Created</div>
                                 </strong>
                                 <small>
                                     <div class="content" v-text="specie.created_at"></div>

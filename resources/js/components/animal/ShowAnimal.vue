@@ -35,16 +35,16 @@
                                     <div>Species ID</div>
                                 </strong>
                                 <small>
-                                    <div class="content" v-text="animal.species_id"></div>
+                                    <div class="content"><a :href="species_url">{{species_name}}</a></div>
                                 </small>
                             </div>
                             <br/>
                             <div class="media-content">
                                 <strong>
-                                    <div>Created at</div>
+                                    <div>Created</div>
                                 </strong>
                                 <small>
-                                    <div class="content" v-text="animal.created_at"></div>
+                                    <div class="content" v-text="moment(animal.created_at).fromNow()"></div>
                                 </small>
                             </div>
                             <br/>
@@ -53,7 +53,7 @@
                                     <div>Last updated at</div>
                                 </strong>
                                 <small>
-                                    <div class="content" v-text="animal.updated_at"></div>
+                                    <div class="content" v-text="moment(animal.updated_at).fromNow()"></div>
                                 </small>
                             </div>
                             <br/>
@@ -70,11 +70,10 @@
 </template>
 
 <script>
+    import moment from 'moment'
+
     export default {
         props: ['title'],
-        mounted() {
-            console.log('ShowAnimal mounted.')
-        },
         data() {
             return {
                 animals: [],
@@ -91,6 +90,7 @@
         },
 
         methods : {
+            moment,
             editAnimal(){
                 window.location.href = '/animal/' + this.animal.slug + '/edit';
             },
@@ -110,17 +110,19 @@
         created() {
             let url  =  window.location.pathname.split('/');
             let animal = url[2];
+            let species_name = "";
 
             axios.get('/list/animal').then(response => {
                     for (let i = 0; i < response.data.length; i++) {
                         if (animal == response.data[i].slug){
-                            console.log(response)
                             this.animal = response.data[i];
                         }
                     }
                 }).catch(error => {
                     console.log(error)
                 });
+
+            console.log(this.animal.species_id);
         }
     }
 </script>

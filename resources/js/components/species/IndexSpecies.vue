@@ -12,7 +12,7 @@
                 <th>Slug</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Created at</th>
+                <th>Created</th>
                 <th>Updated at</th>
                 <th></th>
             </tr>
