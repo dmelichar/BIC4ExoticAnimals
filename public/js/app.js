@@ -42381,7 +42381,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Species ID")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Created at")]),
+        _c("th", [_vm._v("Created")]),
         _vm._v(" "),
         _c("th")
       ])
@@ -42702,7 +42702,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("strong", [_c("div", [_vm._v("Created at")])])
+    return _c("strong", [_c("div", [_vm._v("Created")])])
   },
   function() {
     var _vm = this
@@ -43153,7 +43153,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Description")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Created at")]),
+        _c("th", [_vm._v("Created")]),
         _vm._v(" "),
         _c("th", [_vm._v("Updated at")]),
         _vm._v(" "),
@@ -43303,7 +43303,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("strong", [_c("div", [_vm._v("Created at")])])
+    return _c("strong", [_c("div", [_vm._v("Created")])])
   },
   function() {
     var _vm = this
