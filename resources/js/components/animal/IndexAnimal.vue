@@ -12,6 +12,7 @@
                 <th>Description</th>
                 <th>Species ID</th>
                 <th>Created</th>
+                <th>Last Update</th>
                 <th></th>
             </tr>
             </thead>
@@ -21,6 +22,7 @@
                 <td>{{animal.description}}</td>
                 <td>{{animal.species_id}}</td>
                 <td>{{moment(animal.created_at).fromNow()}}</td>
+                <td>{{moment(animal.updated_at).fromNow()}}</td>
                 <td>
                     <button class="button is-primary" @click="showAnimal(animal)">Show</button>
                 </td>

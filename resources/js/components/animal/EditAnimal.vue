@@ -61,7 +61,7 @@
     });
 
     export default {
-        name: "CreateAnimalComponent",
+        name: "EditAnimalComponent",
         components: {
             QueryMessage
         },
@@ -79,7 +79,7 @@
                     alert("Successfully updated animal")
                 }).catch(error => {
                     console.log(error),
-                        alert("ERROR:\nAnimal name already exists")
+                    alert("ERROR:\nAnimal name already exists")
                 });
             },
 

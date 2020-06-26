@@ -12,14 +12,6 @@
                                     </strong>
                                 </header>
                             </div>
-                            <div class="media-content">
-                                <strong>
-                                    <div>ID</div>
-                                </strong>
-                                <small>
-                                    <div class="content" v-text="specie.id"></div>
-                                </small>
-                            </div>
                             <br/>
                             <div class="media-content">
                                 <strong>
@@ -35,16 +27,16 @@
                                     <div>Created</div>
                                 </strong>
                                 <small>
-                                    <div class="content" v-text="specie.created_at"></div>
+                                    <div class="content" v-text="moment(specie.created_at).fromNow()"></div>
                                 </small>
                             </div>
                             <br/>
                             <div class="media-content">
                                 <strong>
-                                    <div>Last updated at</div>
+                                    <div>Last Update</div>
                                 </strong>
                                 <small>
-                                    <div class="content" v-text="specie.updated_at"></div>
+                                    <div class="content" v-text="moment(specie.updated_at).fromNow()"></div>
                                 </small>
                             </div>
                             <br/>
@@ -61,6 +53,8 @@
 </template>
 
 <script>
+    import moment from 'moment'
+
     export default {
         props: ['title'],
         mounted() {
@@ -70,8 +64,6 @@
             return {
                 species: [],
                 specie: {
-                    id: '',
-                    slug: '',
                     name: '',
                     description: '',
                     created_at: '',
@@ -81,6 +73,7 @@
         },
 
         methods : {
+            moment,
             editSpecies(){
                 window.location.href = '/species/' + this.specie.slug + '/edit';
             },

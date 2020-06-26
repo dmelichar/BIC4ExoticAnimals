@@ -2129,7 +2129,7 @@ var form = new Form({
   'noReset': ['species_id']
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "CreateAnimalComponent",
+  name: "EditAnimalComponent",
   components: {
     QueryMessage: QueryMessage
   },
@@ -2223,6 +2223,8 @@ var form = new Form({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
 //
 //
 //
@@ -2479,14 +2481,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title'],
@@ -2494,8 +2488,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       animals: [],
       animal: {
-        id: '',
-        slug: '',
         name: '',
         description: '',
         species_id: '',
@@ -2789,6 +2781,8 @@ var form = new Form({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2824,10 +2818,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title'],
   mounted: function mounted() {
@@ -2837,8 +2828,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       species: [],
       specie: {
-        id: '',
-        slug: '',
         name: '',
         description: '',
         created_at: '',
@@ -2847,6 +2836,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    moment: moment__WEBPACK_IMPORTED_MODULE_0___default.a,
     showSpecies: function showSpecies(specie) {
       window.location.href = '/species/' + specie.slug;
     },
@@ -2877,6 +2867,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2931,14 +2923,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title'],
   mounted: function mounted() {
@@ -2948,8 +2933,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       species: [],
       specie: {
-        id: '',
-        slug: '',
         name: '',
         description: '',
         created_at: '',
@@ -2958,6 +2941,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    moment: moment__WEBPACK_IMPORTED_MODULE_0___default.a,
     editSpecies: function editSpecies() {
       window.location.href = '/species/' + this.specie.slug + '/edit';
     },
@@ -42322,6 +42306,8 @@ var render = function() {
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(_vm.moment(animal.created_at).fromNow()))]),
             _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(_vm.moment(animal.updated_at).fromNow()))]),
+            _vm._v(" "),
             _c("td", [
               _c(
                 "button",
@@ -42382,6 +42368,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Species ID")]),
         _vm._v(" "),
         _c("th", [_vm._v("Created")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Last Update")]),
         _vm._v(" "),
         _c("th")
       ])
@@ -42571,21 +42559,10 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "media-content" }, [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("small", [
-                  _c("div", {
-                    staticClass: "content",
-                    domProps: { textContent: _vm._s(_vm.animal.id) }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
               _c("br"),
               _vm._v(" "),
               _c("div", { staticClass: "media-content" }, [
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("small", [
                   _c("div", {
@@ -42598,7 +42575,7 @@ var render = function() {
               _c("br"),
               _vm._v(" "),
               _c("div", { staticClass: "media-content" }, [
-                _vm._m(2),
+                _vm._m(1),
                 _vm._v(" "),
                 _c("small", [
                   _c("div", { staticClass: "content" }, [
@@ -42612,7 +42589,7 @@ var render = function() {
               _c("br"),
               _vm._v(" "),
               _c("div", { staticClass: "media-content" }, [
-                _vm._m(3),
+                _vm._m(2),
                 _vm._v(" "),
                 _c("small", [
                   _c("div", {
@@ -42629,7 +42606,7 @@ var render = function() {
               _c("br"),
               _vm._v(" "),
               _c("div", { staticClass: "media-content" }, [
-                _vm._m(4),
+                _vm._m(3),
                 _vm._v(" "),
                 _c("small", [
                   _c("div", {
@@ -42684,12 +42661,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("strong", [_c("div", [_vm._v("ID")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("strong", [_c("div", [_vm._v("Description")])])
   },
   function() {
@@ -42708,7 +42679,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("strong", [_c("div", [_vm._v("Last updated at")])])
+    return _c("strong", [_c("div", [_vm._v("Last Update")])])
   }
 ]
 render._withStripped = true
@@ -43080,17 +43051,13 @@ var render = function() {
         "tbody",
         _vm._l(_vm.species, function(specie) {
           return _c("tr", { key: specie.id }, [
-            _c("td", [_vm._v(_vm._s(specie.id))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(specie.slug))]),
-            _vm._v(" "),
             _c("td", [_vm._v(_vm._s(specie.name))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(specie.description))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(specie.created_at))]),
+            _c("td", [_vm._v(_vm._s(_vm.moment(specie.created_at).fromNow()))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(specie.updated_at))]),
+            _c("td", [_vm._v(_vm._s(_vm.moment(specie.updated_at).fromNow()))]),
             _vm._v(" "),
             _c("td", [
               _c(
@@ -43145,17 +43112,13 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Slug")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", [_vm._v("Description")]),
         _vm._v(" "),
         _c("th", [_vm._v("Created")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Updated at")]),
+        _c("th", [_vm._v("Last Update")]),
         _vm._v(" "),
         _c("th")
       ])
@@ -43200,21 +43163,10 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "media-content" }, [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("small", [
-                  _c("div", {
-                    staticClass: "content",
-                    domProps: { textContent: _vm._s(_vm.specie.id) }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
               _c("br"),
               _vm._v(" "),
               _c("div", { staticClass: "media-content" }, [
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("small", [
                   _c("div", {
@@ -43227,12 +43179,16 @@ var render = function() {
               _c("br"),
               _vm._v(" "),
               _c("div", { staticClass: "media-content" }, [
-                _vm._m(2),
+                _vm._m(1),
                 _vm._v(" "),
                 _c("small", [
                   _c("div", {
                     staticClass: "content",
-                    domProps: { textContent: _vm._s(_vm.specie.created_at) }
+                    domProps: {
+                      textContent: _vm._s(
+                        _vm.moment(_vm.specie.created_at).fromNow()
+                      )
+                    }
                   })
                 ])
               ]),
@@ -43240,12 +43196,16 @@ var render = function() {
               _c("br"),
               _vm._v(" "),
               _c("div", { staticClass: "media-content" }, [
-                _vm._m(3),
+                _vm._m(2),
                 _vm._v(" "),
                 _c("small", [
                   _c("div", {
                     staticClass: "content",
-                    domProps: { textContent: _vm._s(_vm.specie.updated_at) }
+                    domProps: {
+                      textContent: _vm._s(
+                        _vm.moment(_vm.specie.updated_at).fromNow()
+                      )
+                    }
                   })
                 ])
               ]),
@@ -43291,12 +43251,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("strong", [_c("div", [_vm._v("ID")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("strong", [_c("div", [_vm._v("Description")])])
   },
   function() {
@@ -43309,7 +43263,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("strong", [_c("div", [_vm._v("Last updated at")])])
+    return _c("strong", [_c("div", [_vm._v("Last Update")])])
   }
 ]
 render._withStripped = true
@@ -56575,8 +56529,8 @@ var Form = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/dmelichar/repos/BIC4ExoticAnimals/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/dmelichar/repos/BIC4ExoticAnimals/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\marco\PhpstormProjects\BIC4ExoticAnimals\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\marco\PhpstormProjects\BIC4ExoticAnimals\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

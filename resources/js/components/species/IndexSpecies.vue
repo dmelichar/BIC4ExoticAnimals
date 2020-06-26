@@ -8,23 +8,19 @@
         <table class="table">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Slug</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Created</th>
-                <th>Updated at</th>
+                <th>Last Update</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="specie in species" :key="specie.id">
-                <td>{{specie.id}}</td>
-                <td>{{specie.slug}}</td>
                 <td>{{specie.name}}</td>
                 <td>{{specie.description}}</td>
-                <td>{{specie.created_at}}</td>
-                <td>{{specie.updated_at}}</td>
+                <td>{{moment(specie.created_at).fromNow()}}</td>
+                <td>{{moment(specie.updated_at).fromNow()}}</td>
                 <td>
                     <button class="button is-primary" @click="showSpecies(specie)">Show</button>
                 </td>
@@ -38,6 +34,8 @@
 </template>
 
 <script>
+    import moment from 'moment'
+
     export default {
         props: ['title'],
         mounted() {
@@ -47,8 +45,6 @@
             return {
                 species: [],
                 specie: {
-                    id: '',
-                    slug: '',
                     name: '',
                     description: '',
                     created_at: '',
@@ -57,6 +53,7 @@
             }
         },
         methods : {
+            moment,
             showSpecies(specie){
                 window.location.href = '/species/' + specie.slug;
             },

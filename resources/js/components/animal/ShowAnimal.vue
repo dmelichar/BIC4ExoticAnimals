@@ -12,14 +12,6 @@
                                     </strong>
                                 </header>
                             </div>
-                            <div class="media-content">
-                                <strong>
-                                    <div>ID</div>
-                                </strong>
-                                <small>
-                                    <div class="content" v-text="animal.id"></div>
-                                </small>
-                            </div>
                             <br/>
                             <div class="media-content">
                                 <strong>
@@ -50,7 +42,7 @@
                             <br/>
                             <div class="media-content">
                                 <strong>
-                                    <div>Last updated at</div>
+                                    <div>Last Update</div>
                                 </strong>
                                 <small>
                                     <div class="content" v-text="moment(animal.updated_at).fromNow()"></div>
@@ -78,8 +70,6 @@
             return {
                 animals: [],
                 animal: {
-                    id: '',
-                    slug: '',
                     name: '',
                     description: '',
                     species_id: '',
