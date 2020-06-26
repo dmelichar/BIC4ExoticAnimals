@@ -2000,14 +2000,6 @@ var form = new Form({
   'species_id': ''
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "CreateAnimalComponent",
-  components: {
-    QueryMessage: QueryMessage
-  },
-  props: ['title'],
-  mounted: function mounted() {
-    console.log('CreateAnimal mounted.');
-  },
   data: function data() {
     return {
       form: form,
@@ -2015,14 +2007,12 @@ var form = new Form({
       noSpeciesID: false
     };
   },
-  //TODO: Assign correct ID - it is never reset idk why or how
   methods: {
     // submit form handler
     submit: function submit() {
       var _this = this;
 
       this.form.post('/animal').then(function (response) {
-        console.log(response);
         alert("Successfully created animal");
         _this.form.name = '';
         _this.form.description = '';
@@ -2036,7 +2026,6 @@ var form = new Form({
     var _this2 = this;
 
     axios.get('/list/species').then(function (response) {
-      console.log(response);
       _this2.species = response.data;
       if (_this2.loading) _this2.noSpeciesID = true;
     })["catch"](function (error) {
@@ -2129,19 +2118,10 @@ var form = new Form({
   'noReset': ['species_id']
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "EditAnimalComponent",
-  components: {
-    QueryMessage: QueryMessage
-  },
-  props: ['title'],
-  mounted: function mounted() {
-    console.log('EditAnimal mounted.');
-  },
   methods: {
     // submit form handler
     submit: function submit() {
       this.form.put('/animal/' + this.animal.slug).then(function (response) {
-        console.log(response);
         alert("Successfully updated animal");
       })["catch"](function (error) {
         console.log(error), alert("ERROR:\nAnimal name already exists");
@@ -2150,7 +2130,6 @@ var form = new Form({
     deleteAnimal: function deleteAnimal() {
       if (confirm("Are you sure you want to delete this animal?\nIt cannot be restored")) {
         axios["delete"]('/animal/' + this.animal.slug).then(function (response) {
-          console.log(response);
           window.location.href = '/animal';
         })["catch"](function (error) {
           console.log(error);
@@ -2177,7 +2156,6 @@ var form = new Form({
     axios.get('/list/animal').then(function (response) {
       for (var i = 0; i < response.data.length; i++) {
         if (animal == response.data[i].slug) {
-          console.log(response);
           _this.animal.slug = response.data[i].slug;
           _this.form.name = response.data[i].name;
           _this.form.description = response.data[i].description;
@@ -2189,7 +2167,6 @@ var form = new Form({
       console.log(error);
     });
     axios.get('/list/species').then(function (response) {
-      console.log(response);
       _this.species = response.data;
       if (_this.loading) _this.noSpeciesID = true;
     })["catch"](function (error) {
@@ -2262,22 +2239,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title'],
-  mounted: function mounted() {
-    console.log('IndexAnimal mounted.');
-  },
   data: function data() {
     return {
       animals: [],
       animal: {
-        id: '',
-        slug: '',
         name: '',
         description: '',
         species_id: '',
         created_at: '',
         updated_at: ''
-      }
+      },
+      species: []
     };
   },
   methods: {
@@ -2287,6 +2259,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     editAnimal: function editAnimal(animal) {
       window.location.href = '/animal/' + animal.slug + '/edit';
+    },
+    showSpecies: function showSpecies(specie) {
+      window.location.href = '/species/' + specie.slug;
     }
   },
   created: function created() {
@@ -2294,6 +2269,11 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get('/list/animal').then(function (response) {
       _this.animals = response.data;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+    axios.get('/list/species').then(function (response) {
+      _this.species = response.data;
     })["catch"](function (error) {
       console.log(error);
     });
@@ -2358,25 +2338,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title'],
-  mounted: function mounted() {
-    console.log('SearchAnimal mounted.');
-  },
   data: function data() {
     return {
       animals: [],
       animal: {
-        id: '',
-        slug: '',
         name: '',
         description: '',
-        species_id: '',
-        created_at: '',
-        updated_at: ''
+        species_id: ''
       },
+      species: [],
       userInput: null
     };
   },
@@ -2390,7 +2361,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post('/search/animal?q=' + this.userInput).then(function (response) {
-        console.log(response);
         _this.animals = response.data;
       })["catch"](function (error) {
         console.log(error);
@@ -2401,7 +2371,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     editAnimal: function editAnimal(animal) {
       window.location.href = '/animal/' + animal.slug + '/edit';
+    },
+    showSpecies: function showSpecies(specie) {
+      window.location.href = '/species/' + specie.slug;
     }
+  },
+  created: function created() {
+    var _this2 = this;
+
+    axios.get('/list/species').then(function (response) {
+      _this2.species = response.data;
+    })["catch"](function (error) {
+      console.log(error);
+    });
   }
 });
 
@@ -2483,7 +2465,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title'],
   data: function data() {
     return {
       animals: [],
@@ -2493,7 +2474,8 @@ __webpack_require__.r(__webpack_exports__);
         species_id: '',
         created_at: '',
         updated_at: ''
-      }
+      },
+      species: []
     };
   },
   methods: {
@@ -2504,12 +2486,14 @@ __webpack_require__.r(__webpack_exports__);
     deleteAnimal: function deleteAnimal() {
       if (confirm("Are you sure you want to delete this animal?\nIt cannot be restored")) {
         axios["delete"]('/animal/' + this.animal.slug).then(function (response) {
-          console.log(response);
           window.location.href = '/animal';
         })["catch"](function (error) {
           console.log(error);
         });
       }
+    },
+    showSpecies: function showSpecies(specie) {
+      window.location.href = '/species/' + specie.slug;
     }
   },
   created: function created() {
@@ -2517,7 +2501,6 @@ __webpack_require__.r(__webpack_exports__);
 
     var url = window.location.pathname.split('/');
     var animal = url[2];
-    var species_name = "";
     axios.get('/list/animal').then(function (response) {
       for (var i = 0; i < response.data.length; i++) {
         if (animal == response.data[i].slug) {
@@ -2527,7 +2510,11 @@ __webpack_require__.r(__webpack_exports__);
     })["catch"](function (error) {
       console.log(error);
     });
-    console.log(this.animal.species_id);
+    axios.get('/list/species').then(function (response) {
+      _this.species = response.data;
+    })["catch"](function (error) {
+      console.log(error);
+    });
   }
 });
 
@@ -2624,27 +2611,17 @@ var form = new Form({
   'description': ''
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "CreateSpeciesComponent",
-  components: {
-    QueryMessage: QueryMessage
-  },
-  props: ['title'],
-  mounted: function mounted() {
-    console.log('CreateSpecies mounted.');
-  },
   data: function data() {
     return {
       form: form
     };
   },
-  //TODO: Assign correct ID - it is never reset idk why or how
   methods: {
     // submit form handler
     submit: function submit() {
       var _this = this;
 
       this.form.post('/species').then(function (response) {
-        console.log(response);
         alert("Successfully created species");
         _this.form.name = '';
         _this.form.description = '';
@@ -2711,19 +2688,10 @@ var form = new Form({
   'noReset': ['species_id']
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "CreateSpeciesComponent",
-  components: {
-    QueryMessage: QueryMessage
-  },
-  props: ['title'],
-  mounted: function mounted() {
-    console.log('EditSpecies mounted.');
-  },
   methods: {
     // submit form handler
     submit: function submit() {
       this.form.put('/species/' + this.specie.slug).then(function (response) {
-        console.log(response);
         alert("Successfully updated species");
       })["catch"](function (error) {
         console.log(error), alert("ERROR:\nSpecies name already exists");
@@ -2732,7 +2700,6 @@ var form = new Form({
     deleteSpecies: function deleteSpecies() {
       if (confirm("Are you sure you want to delete this species?\nIt cannot be restored")) {
         axios["delete"]('/species/' + this.specie.slug).then(function (response) {
-          console.log(response);
           window.location.href = '/species';
         })["catch"](function (error) {
           console.log(error);
@@ -2757,7 +2724,6 @@ var form = new Form({
     axios.get('/list/species').then(function (response) {
       for (var i = 0; i < response.data.length; i++) {
         if (specie == response.data[i].slug) {
-          console.log(response);
           _this.specie.slug = response.data[i].slug;
           _this.form.name = response.data[i].name;
           _this.form.description = response.data[i].description;
@@ -2820,10 +2786,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title'],
-  mounted: function mounted() {
-    console.log('IndexSpecies mounted.');
-  },
   data: function data() {
     return {
       species: [],
@@ -2848,7 +2810,6 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/list/species').then(function (response) {
-      console.log(response);
       _this.species = response.data;
     })["catch"](function (error) {
       console.log(error);
@@ -2923,20 +2884,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['title'],
-  mounted: function mounted() {
-    console.log('ShowSpecies mounted.');
-  },
   data: function data() {
     return {
       species: [],
       specie: {
+        id: '',
         name: '',
         description: '',
         created_at: '',
         updated_at: ''
+      },
+      animals: [],
+      animal: {
+        species_id: ''
       }
     };
   },
@@ -2948,12 +2919,14 @@ __webpack_require__.r(__webpack_exports__);
     deleteSpecies: function deleteSpecies() {
       if (confirm("Are you sure you want to delete this species?\nIt cannot be restored")) {
         axios["delete"]('/species/' + this.specie.slug).then(function (response) {
-          console.log(response);
           window.location.href = '/species';
         })["catch"](function (error) {
           console.log(error);
         });
       }
+    },
+    showAnimal: function showAnimal(animal) {
+      window.location.href = '/animal/' + animal.slug;
     }
   },
   created: function created() {
@@ -2964,10 +2937,14 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/list/species').then(function (response) {
       for (var i = 0; i < response.data.length; i++) {
         if (specie == response.data[i].slug) {
-          console.log(response);
           _this.specie = response.data[i];
         }
       }
+    })["catch"](function (error) {
+      console.log(error);
+    });
+    axios.get('/list/animal').then(function (response) {
+      _this.animals = response.data;
     })["catch"](function (error) {
       console.log(error);
     });
@@ -42297,47 +42274,72 @@ var render = function() {
       _c(
         "tbody",
         _vm._l(_vm.animals, function(animal) {
-          return _c("tr", { key: animal.id }, [
-            _c("td", [_vm._v(_vm._s(animal.name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.description))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(animal.species_id))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(_vm.moment(animal.created_at).fromNow()))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(_vm.moment(animal.updated_at).fromNow()))]),
-            _vm._v(" "),
-            _c("td", [
-              _c(
-                "button",
-                {
-                  staticClass: "button is-primary",
-                  on: {
-                    click: function($event) {
-                      return _vm.showAnimal(animal)
+          return _c(
+            "tr",
+            { key: animal.id },
+            [
+              _c("td", [_vm._v(_vm._s(animal.name))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(animal.description))]),
+              _vm._v(" "),
+              _vm._l(_vm.species, function(specie) {
+                return specie.id == animal.species_id
+                  ? _c("td", [
+                      _c(
+                        "a",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.showSpecies(specie)
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(specie.name))]
+                      )
+                    ])
+                  : _vm._e()
+              }),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(_vm._s(_vm.moment(animal.created_at).fromNow()))
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(_vm._s(_vm.moment(animal.updated_at).fromNow()))
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "button is-primary",
+                    on: {
+                      click: function($event) {
+                        return _vm.showAnimal(animal)
+                      }
                     }
-                  }
-                },
-                [_vm._v("Show")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", [
-              _c(
-                "button",
-                {
-                  staticClass: "button is-primary",
-                  on: {
-                    click: function($event) {
-                      return _vm.editAnimal(animal)
+                  },
+                  [_vm._v("Show")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "button is-primary",
+                    on: {
+                      click: function($event) {
+                        return _vm.editAnimal(animal)
+                      }
                     }
-                  }
-                },
-                [_vm._v("Edit")]
-              )
-            ])
-          ])
+                  },
+                  [_vm._v("Edit")]
+                )
+              ])
+            ],
+            2
+          )
         }),
         0
       )
@@ -42365,7 +42367,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Description")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Species ID")]),
+        _c("th", [_vm._v("Species")]),
         _vm._v(" "),
         _c("th", [_vm._v("Created")]),
         _vm._v(" "),
@@ -42442,45 +42444,63 @@ var render = function() {
                 _c(
                   "tbody",
                   _vm._l(_vm.animals, function(animal) {
-                    return _c("tr", [
-                      _c("td", [_vm._v(_vm._s(animal.id))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(animal.name))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(animal.description))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(animal.description))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "button is-primary",
-                            on: {
-                              click: function($event) {
-                                return _vm.showAnimal(animal)
+                    return _c(
+                      "tr",
+                      [
+                        _c("td", [_vm._v(_vm._s(animal.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(animal.description))]),
+                        _vm._v(" "),
+                        _vm._l(_vm.species, function(specie) {
+                          return specie.id == animal.species_id
+                            ? _c("td", [
+                                _c(
+                                  "a",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.showSpecies(specie)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v(_vm._s(specie.name))]
+                                )
+                              ])
+                            : _vm._e()
+                        }),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button is-primary",
+                              on: {
+                                click: function($event) {
+                                  return _vm.showAnimal(animal)
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("Show")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "button is-primary",
-                            on: {
-                              click: function($event) {
-                                return _vm.editAnimal(animal)
+                            },
+                            [_vm._v("Show")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button is-primary",
+                              on: {
+                                click: function($event) {
+                                  return _vm.editAnimal(animal)
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("Edit")]
-                        )
-                      ])
-                    ])
+                            },
+                            [_vm._v("Edit")]
+                          )
+                        ])
+                      ],
+                      2
+                    )
                   }),
                   0
                 )
@@ -42508,13 +42528,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("ID")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", [_vm._v("Description")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Species ID")]),
+        _c("th", [_vm._v("Species")]),
         _vm._v(" "),
         _c("th")
       ])
@@ -42577,13 +42595,27 @@ var render = function() {
               _c("div", { staticClass: "media-content" }, [
                 _vm._m(1),
                 _vm._v(" "),
-                _c("small", [
-                  _c("div", { staticClass: "content" }, [
-                    _c("a", { attrs: { href: _vm.species_url } }, [
-                      _vm._v(_vm._s(_vm.species_name))
-                    ])
-                  ])
-                ])
+                _c(
+                  "small",
+                  _vm._l(_vm.species, function(specie) {
+                    return specie.id == _vm.animal.species_id
+                      ? _c("div", { staticClass: "content" }, [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.showSpecies(specie)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(specie.name))]
+                          )
+                        ])
+                      : _vm._e()
+                  }),
+                  0
+                )
               ]),
               _vm._v(" "),
               _c("br"),
@@ -42667,7 +42699,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("strong", [_c("div", [_vm._v("Species ID")])])
+    return _c("strong", [_c("div", [_vm._v("Species")])])
   },
   function() {
     var _vm = this
@@ -43212,6 +43244,34 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
+              _c("div", { staticClass: "media-content" }, [
+                _vm._m(3),
+                _vm._v(" "),
+                _c(
+                  "small",
+                  _vm._l(_vm.animals, function(animal) {
+                    return animal.species_id == _vm.specie.id
+                      ? _c("div", { staticClass: "content" }, [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.showAnimal(animal)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(animal.name))]
+                          )
+                        ])
+                      : _vm._e()
+                  }),
+                  0
+                )
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
               _c("div", [
                 _c(
                   "button",
@@ -43264,6 +43324,12 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("strong", [_c("div", [_vm._v("Last Update")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("strong", [_c("div", [_vm._v("Animals with this species")])])
   }
 ]
 render._withStripped = true

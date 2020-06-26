@@ -61,21 +61,11 @@
     });
 
     export default {
-        name: "EditAnimalComponent",
-        components: {
-            QueryMessage
-        },
-
-        props: ['title'],
-        mounted() {
-            console.log('EditAnimal mounted.')
-        },
 
         methods: {
             // submit form handler
             submit() {
                 this.form.put('/animal/' + this.animal.slug).then((response) => {
-                    console.log(response);
                     alert("Successfully updated animal")
                 }).catch(error => {
                     console.log(error),
@@ -86,7 +76,6 @@
             deleteAnimal(){
                 if (confirm("Are you sure you want to delete this animal?\nIt cannot be restored")) {
                     axios.delete('/animal/' + this.animal.slug).then(response => {
-                        console.log(response);
                         window.location.href = '/animal';
                     }).catch(error => {
                         console.log(error)
@@ -114,7 +103,6 @@
             axios.get('/list/animal').then(response => {
                 for (let i = 0; i < response.data.length; i++) {
                     if (animal == response.data[i].slug){
-                        console.log(response)
                         this.animal.slug = response.data[i].slug;
                         this.form.name = response.data[i].name;
                         this.form.description = response.data[i].description;
@@ -127,7 +115,6 @@
             });
 
             axios.get('/list/species').then((response) => {
-                console.log(response)
                 this.species = response.data;
 
                 if(this.loading)

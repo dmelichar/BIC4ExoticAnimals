@@ -55,15 +55,6 @@
     });
 
     export default {
-        name: "CreateAnimalComponent",
-        components: {
-            QueryMessage
-        },
-
-        props: ['title'],
-        mounted() {
-            console.log('CreateAnimal mounted.')
-        },
 
         data: function () {
             return {
@@ -72,12 +63,11 @@
                 noSpeciesID: false
             };
         },
-        //TODO: Assign correct ID - it is never reset idk why or how
+
         methods: {
             // submit form handler
             submit() {
                 this.form.post('/animal').then((response) => {
-                    console.log(response);
                     alert("Successfully created animal")
                     this.form.name = '';
                     this.form.description = '';
@@ -91,7 +81,6 @@
 
         created() {
             axios.get('/list/species').then((response) => {
-                console.log(response)
                 this.species = response.data;
 
                 if(this.loading)

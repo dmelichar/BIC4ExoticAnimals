@@ -39,27 +39,17 @@
     });
 
     export default {
-        name: "CreateSpeciesComponent",
-        components: {
-            QueryMessage
-        },
-
-        props: ['title'],
-        mounted() {
-            console.log('CreateSpecies mounted.')
-        },
 
         data: function () {
             return {
                 form: form
             };
         },
-        //TODO: Assign correct ID - it is never reset idk why or how
+
         methods: {
             // submit form handler
             submit() {
                 this.form.post('/species').then((response) => {
-                    console.log(response);
                     alert("Successfully created species")
                     this.form.name = ''
                     this.form.description = '';

@@ -45,21 +45,11 @@
     });
 
     export default {
-        name: "CreateSpeciesComponent",
-        components: {
-            QueryMessage
-        },
-
-        props: ['title'],
-        mounted() {
-            console.log('EditSpecies mounted.')
-        },
 
         methods: {
             // submit form handler
             submit() {
                 this.form.put('/species/' + this.specie.slug).then((response) => {
-                    console.log(response);
                     alert("Successfully updated species")
                 }).catch(error => {
                     console.log(error),
@@ -70,7 +60,6 @@
             deleteSpecies() {
                 if (confirm("Are you sure you want to delete this species?\nIt cannot be restored")) {
                     axios.delete('/species/' + this.specie.slug).then(response => {
-                        console.log(response);
                         window.location.href = '/species';
                     }).catch(error => {
                         console.log(error)
@@ -96,7 +85,6 @@
             axios.get('/list/species').then(response => {
                 for (let i = 0; i < response.data.length; i++) {
                     if (specie == response.data[i].slug) {
-                        console.log(response)
                         this.specie.slug = response.data[i].slug;
                         this.form.name = response.data[i].name;
                         this.form.description = response.data[i].description;

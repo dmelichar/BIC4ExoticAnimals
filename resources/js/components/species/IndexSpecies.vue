@@ -37,10 +37,7 @@
     import moment from 'moment'
 
     export default {
-        props: ['title'],
-        mounted() {
-            console.log('IndexSpecies mounted.')
-        },
+
         data() {
             return {
                 species: [],
@@ -52,8 +49,10 @@
                 },
             }
         },
+
         methods : {
             moment,
+
             showSpecies(specie){
                 window.location.href = '/species/' + specie.slug;
             },
@@ -62,9 +61,9 @@
                 window.location.href = '/species/' + specie.slug + '/edit';
             }
         },
+
         created() {
             axios.get('/list/species').then((response) => {
-                console.log(response)
                 this.species = response.data;
             }).catch(error => {
                 console.log(error)

@@ -19,19 +19,17 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
                             <th>Description</th>
-                            <th>Species ID</th>
+                            <th>Species</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="animal in animals">
-                            <td>{{animal.id}}</td>
                             <td>{{animal.name}}</td>
                             <td>{{animal.description}}</td>
-                            <td>{{animal.description}}</td>
+                            <td v-for="specie in species" v-if="specie.id == animal.species_id"><a @click="showSpecies(specie)">{{specie.name}}</a></td>
                             <td>
                                 <button class="button is-primary" @click="showAnimal(animal)">Show</button>
                             </td>
@@ -50,23 +48,16 @@
 <script>
 
     export default {
-        props: ['title'],
-        mounted() {
-            console.log('SearchAnimal mounted.')
-        },
 
         data() {
           return {
               animals: [],
               animal: {
-                  id: '',
-                  slug: '',
                   name: '',
                   description: '',
                   species_id: '',
-                  created_at: '',
-                  updated_at: ''
               },
+              species: [],
               userInput: null
           }
         },
@@ -80,7 +71,6 @@
         methods: {
             search(){
                 axios.post('/search/animal?q='+this.userInput).then(response => {
-                    console.log(response);
                     this.animals = response.data
                 }).catch(error => {
                     console.log(error);
@@ -93,7 +83,19 @@
 
             editAnimal(animal){
                 window.location.href = '/animal/' + animal.slug + '/edit';
+            },
+
+            showSpecies(specie){
+                window.location.href = '/species/' + specie.slug;
             }
+        },
+
+        created() {
+            axios.get('/list/species').then((response) => {
+                this.species = response.data;
+            }).catch(error => {
+                console.log(error)
+            });
         }
     }
 </script>
