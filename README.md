@@ -1,11 +1,31 @@
 # BIC4 Project: Exotic animals
 
+### Authors
+
 - Florian Dienesch  (ic18b509@technikum-wien.at)
 - Marco Judt        (ic18b039@technikum-wien.at)
 - Daniel Melichar   (ic18b503@technikum-wien.at)
 
+### Brief Description
+
 This software lists exotic animals and species belongs to them.
 It is possible to search for animals by various parameters.
+Additionally one can create new or edit existing animals/species. 
+
+### Support
+This software was tested with following browser:
+ - Google Chrome Version 83.0.4103.116
+ - Mozilla Firefox Version 77.0.1
+ 
+### Description
+
+When accessing the website it is possible to register or when already done to login. Once logged in the dashboard is displayed with three tabs: Home, Animals, Species.
+Home always forwards back to the dashboard.
+Under Animals it is possible to list all existings animals, search for them or create new ones. In the animals list it is also possible to show each specific animal, edit them or show the corresponding species.
+Under Species it is possible to list all existing species or create new ones. In the species list it is also possible to show each specific specie or edit them.
+When displaying one specific species the corresponding animals are also shown and it is possible to access them directly.
+
+### Demo
 
 ![Demo](./demo.gif)
 
